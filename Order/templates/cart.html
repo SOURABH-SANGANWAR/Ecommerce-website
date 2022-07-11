@@ -1,0 +1,114 @@
+{% load static %}
+
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <link
+      rel="stylesheet"
+      href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+      rel="nofollow"
+      integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
+      crossorigin="anonymous"
+    />
+    <link href="{% static 'css/cart.css'%}" media="all" rel="stylesheet" />
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>MyCart</title>
+  </head>
+  <body>
+    <header>
+      {% include 'nav.html'%}
+      <div id="myBtn" onClick="screenTop()">
+        <img
+          src="{%static 'img/top.jpg'%}"
+          alt="top"
+          style="width: 100%; overflow: hidden;"
+        />
+      </div>
+    </header>
+    <main>
+        <div id = 'dummy-nav'></div>
+        <h2>My Cart</h2><hr>
+        <h3>Order Value: {{order.netPrice}}/-</h3>
+        {%if products%}
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-lg-10">
+                    <div class="container-fluid" style="box-shadow: rgba(50, 50, 93, 0.25) 0px 2px 5px -1px, rgba(0, 0, 0, 0.3) 0px 1px 3px -1px;">
+                      {%for prodt in products%}
+                        <div class="row">
+                            <div class="col-6 col-sm-6 col-md-4 col-lg-3"><img src="{%static prodt.Item.Image%}" style="width: 100%; height :100%;" alt=""></div>
+                            <div class="col-6 col-sm-6 col-md-6 col-lg-7">
+                                <h3> <a href="{{prodt.Item.get_view_url}}" style="color: black;"> {{prodt.Item}}</a></h3>
+                                <div>InStock</div>
+                                <form action="" method="post" >{%csrf_token%}
+                                <select name="{{prodt.Seller.id}}" onchange="this.form.submit()" style="width: 10%;">
+                                    {%for i in 10r%}
+                                    <option value="{{i}}" {% if prodt.Quantity == i %}selected{%endif%}>{{i}}</option>
+                                    {%endfor%}
+                                </select>     
+                                <input type="submit" value="delete" name = 'delete'>
+                            </form>       
+                            <div class="NetPrice">
+                                Product Price : {{prodt.Seller.Price}}/-
+                            </div>                        
+                            </div>
+                            <div class=" col-sm-12 col-lg-2" style="display: table-cell;vertical-align: middle;">
+                                <div class="price" style="position: absolute;top: 50%;transform: translateY(-60%); width : 100%; display :inline-block;text-align: center; font-size: xx-large; margin: auto;">{% widthratio prodt.Quantity 1 prodt.Seller.Price %}/-</div>
+                            </div>
+                        </div>
+                        <hr>
+                        {%endfor%}
+                    </div>
+                  </div>
+                <div class="col-lg-2" style="box-shadow: rgba(50, 50, 93, 0.25) 0px 2px 5px -1px, rgba(0, 0, 0, 0.3) 0px 1px 3px -1px;">
+                  <div class="Address">
+                    <h3>Delivery Address</h3>
+                    <div class="perRating">
+                      {{order.customer.address}}
+                    </div>
+                  </div>
+                  <div class="ModeOfPayment" style="display: flex;align-items:center; ">
+                    <form action="" method="post">{%csrf_token%}
+                      <h3>Payment:</h3>
+                      <input type="radio" name="ModeOfPayment" id="ModeOfPayment">
+                      <label for="ModeOfPayment">Cash</label><br>
+                      <input type="radio" name="ModeOfPayment" id="ModeOfPayment">
+                      <label for="ModeOfPayment">Card</label><br>
+                      <input type="radio" name="ModeOfPayment" id="ModeOfPayment">
+                      <label for="ModeOfPayment">OnlineTransfer</label><br>
+                      <input type="submit" value="Proceed To Payment" id = 'Checkout', Name = 'Checkout'>
+                    </form>
+                  </div>
+                </div>
+            </div>
+        </div>
+        {%else%}
+        <br>
+        <h4>Add some Products so that you can create order.</h4>
+        {%endif%}
+    </main>
+
+    <script
+      src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+      integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+      crossorigin="anonymous"
+    ></script>
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
+      integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+      crossorigin="anonymous"
+    ></script>
+    <script
+      src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
+      integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+      crossorigin="anonymous"
+    ></script>
+    <script src="{% static 'js/scripting.js'%}"></script>
+    <script src="{% static 'js/scriptcart.js'%}"></script>
+  </body>
+</html>
