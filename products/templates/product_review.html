@@ -1,0 +1,13 @@
+<div class="review">
+    <h4>{{current_review}}</h4>
+    <span class="Rating" style="color: red;  padding-bottom: 2%;">
+      Rating:
+      {%include 'c_ratings.html'%}
+    </span><b>
+      {%if current_review.Title is not null %}
+      {{current_review.Title}} 
+      {%endif%}</b>
+    <div class = 'perRating'>
+      {{current_review.desc}}  
+    </div>
+  </div>

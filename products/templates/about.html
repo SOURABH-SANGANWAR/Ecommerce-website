@@ -1,0 +1,10 @@
+<div id="About">
+    <h2>Product Details</h2>
+    <hr>
+    <h3>About Product</h3>
+    <p>{{obj.description}}</p>
+    <h3>Specifications</h3>
+    {% autoescape off %}
+        {{obj.features}}
+    {% endautoescape %}
+  </div>
