@@ -1,0 +1,112 @@
+{% load static %}
+<nav class="navbar navbar-expand-lg navbar-dark" id="headNav">
+    <a href="/" class="navbar-brand">Shopping App</a>
+    <button
+      class="navbar-toggler collapsed"
+      data-toggle="collapse"
+      data-target="#collmenu"
+    >
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="collmenu">
+      <ul class="navbar-nav nav">
+        <p id="indent">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</p>
+        <li class="nav-item">
+          <a
+            class="nav-link"
+            href="/offers"
+            >Offers</a
+          >
+        </li>
+        <li class="nav-item">
+          <a
+            class="nav-link"
+            href="/categories"
+            >Categories</a
+          >
+        </li>
+        <li class="nav-item">
+          <a
+            class="nav-link"
+            href="javascript:void(0);"
+            onclick="showSearch();"
+            >Search</a
+          >
+        </li>
+      </ul>
+      {%if requests.user.is_authenticated %}
+      <ul class="navbar-nav ml-auto loggedIn">
+        <li class="nav-item">
+          <a
+            class="nav-link"
+            href="/cart"
+            >Cart</a
+          >
+        </li>
+        <li class="nav-item">
+          <a
+            class="nav-link"
+            href="/Userprofile"
+            > 
+            <img src="{% static 'img/360_F_346839683_6nAPzbhpSkIpb8pmAwufkC7c5eD7wYws.jpg'%}" style = "width: 30px; height: 30px; border-radius: 15px; overflow: hidden;" alt=""> </a
+          >
+        </li>
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            {{requests.user.username|capfirst}}
+          </a>
+          <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+            <a class="dropdown-item" href="/Userprofile">Profile</a>
+            <a class="dropdown-item" href="/orderlist">My Orders</a>
+            <a class="dropdown-item" href="/logout">Logout</a>
+          </div>
+        </li>
+      </ul>
+      {%else%}
+      <ul class="navbar-nav ml-auto login">
+        <li class="nav-item">
+          <a
+            class="nav-link"
+            href="/login/"
+            >Login</a
+          >
+        </li>
+      </ul>
+      {%endif%}
+      
+    </div>
+  </nav>
+
+  <div id="searchBar" style="position: fixed;
+  background-color: black;
+  z-index: 100;
+  padding: 1vh 1vw;
+  width: 100vw;
+  display: none;">
+
+  <div class="input-group" >
+    <input type="search" class="form-control rounded" id = 'searchfield' placeholder="Search" aria-label="Search" aria-describedby="search-addon" />
+    <button type="button" class="btn btn-outline-primary" onclick="doSearch();" >search</button>
+  </div>
+  
+
+</div>
+
+<script>
+  function showSearch(){
+    searchBar.style.top = navh + 'px';
+    console.log(navh);
+    console.log('navh');
+      if(searchBar.style.display == 'none')
+          searchBar.style.display = 'block';
+      else
+      searchBar.style.display = 'none';
+      document.getElementById("collmenu").className = "navbar-collapse collapse"; 
+  }
+  function doSearch(){
+    x = document.getElementById('searchfield').value
+    location.href = '/products/search/' +x + '/'
+  }
+</script>
+
+<!-- made by sourabh sanganwar -->

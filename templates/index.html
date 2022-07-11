@@ -1,0 +1,180 @@
+{% load static %}
+
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <link
+      rel="stylesheet"
+      href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+      rel="nofollow"
+      integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
+      crossorigin="anonymous"
+    />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    {% load static %}
+    <link href="{% static 'css/style.css'%}" media="all" rel="stylesheet" />
+    <link href="{% static 'css/home.css'%}" media="all" rel="stylesheet" />
+    {% load static %}
+    <link href="{% static 'css/loader.css'%}" media="all" rel="stylesheet" />
+
+    
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <header>
+      {% include 'nav.html'%}
+      <div id="dummy">
+        <img class = "flyerImg 1"src="{% static 'img/1.jpg'%}" alt="">
+        <img class = "flyerImg 2"src="{% static 'img/2.jpg'%}" alt="">
+        <img class = "flyerImg 3"src="{% static 'img/3.jpg'%}" alt="">
+        <img class = "flyerImg 4"src="{% static 'img/4.jpg'%}" alt="">
+        <img class = "flyerImg 5"src="{% static 'img/1.jpg'%}" alt="">
+        <img class = "flyerImg 6"src="{% static 'img/2.jpg'%}" alt="">
+      </div>
+      <!-- <div class="left arrow" onClick="screenTop()">
+        <i class="fa fa-arrow-left" aria-hidden="true"></i>
+    </div>
+    <div class="right arrow" onClick="screenTop()">
+        <i class="fa fa-arrow-right" aria-hidden="true"></i>
+    </div> -->
+    <div class="left arrow" id = 'lefarr' onClick="Left()">
+      <p id = "leftarr"> &lt;</p>
+  </div>
+  <div class="right arrow" id = 'rigarr' onClick="Right()">
+    <p id = "rightarr"> &gt;</p>
+  </div>
+    <div class="flyer-nav" id = "flyer-nav" >
+      <div class="circle" id="1" onClick="Nav(self.id)">
+      </div>
+      <div class="circle" id="2" onClick="Nav(self.id)">
+      </div>
+      <div class="circle" id="3" onClick="Nav(self.id)">
+      </div>
+      <div class="circle" id="4" onClick="Nav(self.id)">
+      </div>
+      <div class="circle" id="5" onClick="Nav(self.id)">
+      </div>
+      <div class="circle" id="6" onClick="Nav(self.id)">
+      </div>
+  </div>
+      
+      <div id="myBtn" onClick="screenTop()">
+        <img
+          src="{% static 'img/top.jpg'%}"
+          alt="top"
+          style="width: 100%; overflow: hidden"
+        />
+      </div>
+    </header>
+    <div id="flyer">
+      <div onClick="HideAnimation()">X</div>
+      <div id="loginPage">
+        <div class="container h-100">
+          <div class="d-flex justify-content-center h-100">
+            <div class="user_card">
+              <div class="d-flex justify-content-center">
+                <div class="brand_logo_container">
+                  <img src="https://cdn.freebiesupply.com/logos/large/2x/pinterest-circle-logo-png-transparent.png" class="brand_logo" alt="Logo">
+                </div>
+              </div>
+              <div class="d-flex justify-content-center form_container">
+                <form>
+                  <div class="input-group mb-3">
+                    <div class="input-group-append">
+                      <span class="input-group-text"><i class="fas fa-user"></i></span>
+                    </div>
+                    <input type="text" name="" class="form-control input_user" value="" placeholder="username">
+                  </div>
+                  <div class="input-group mb-2">
+                    <div class="input-group-append">
+                      <span class="input-group-text"><i class="fas fa-key"></i></span>
+                    </div>
+                    <input type="password" name="" class="form-control input_pass" value="" placeholder="password">
+                  </div>
+                  <div class="form-group">
+                    <div class="custom-control custom-checkbox">
+                      <input type="checkbox" class="custom-control-input" id="customControlInline">
+                      <label class="custom-control-label" for="customControlInline">Remember me</label>
+                    </div>
+                  </div>
+                    <div class="d-flex justify-content-center mt-3 login_container">
+                 <button type="button" name="button" class="btn login_btn">Login</button>
+                 </div>
+                </form>
+              </div>
+          
+              <div class="mt-4">
+                <div class="d-flex justify-content-center links">
+                  Don't have an account? <a href="#" class="ml-2">Sign Up</a>
+                </div>
+                <div class="d-flex justify-content-center links">
+                  <a href="#">Forgot your password?</a>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <main>
+      
+      <div class="off">
+        <h2>
+          offers
+        </h2>
+        <hr>
+        <div class="container-fliud"  style="overflow-x: scroll; display: none;"id="offers">
+          <div class="row products-row" style="width: {{numOff}}px;" id = 'offersRow'>
+            <div class="col product-list-display last">Click Here to view more</div>
+          </div>
+        </div>
+        <div class="container-fliud"  style="overflow-x: scroll;"id="offers">
+          <div class="row products-row" style="width: {{numOff}}px;" id = 'offersRow'>
+            {%for object in off%}
+                {%include 'list_prod_show.html'%}
+            {%endfor%}
+            <div class="col product-list-display last">Click Here to view more</div>
+          </div>
+        </div>
+      </div>
+    <br>
+    <div class="Top-Sales">
+      <h2>
+        Top Selling
+      </h2>
+      <hr>
+      <div class="container-fliud"  style="overflow-x: scroll;"id="TopSellers">
+        <div class="row products-row" style="width: {{numTop}}px;" id = 'TopSellingRow'>
+          {%for object in best%}
+              {%include 'list_prod_show.html'%}
+          {%endfor%}
+          <div class="col product-list-display last">Click Here to view more</div>
+        </div>
+      </div>
+    </div>
+    </main>
+
+    <script
+      src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+      integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+      crossorigin="anonymous"
+    ></script>
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
+      integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+      crossorigin="anonymous"
+    ></script>
+    <script
+      src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
+      integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+      crossorigin="anonymous"
+    ></script>
+    <script src="{% static 'js/script.js'%}"></script>
+  </body>
+</html>
+
+<!-- made by sourabh sanganwar -->

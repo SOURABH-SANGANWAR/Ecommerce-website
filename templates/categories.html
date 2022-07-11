@@ -1,0 +1,72 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <link
+      rel="stylesheet"
+      href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+      rel="nofollow"
+      integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
+      crossorigin="anonymous"
+    />
+    <link href="{% static 'css/styles.css'%}" media="all" rel="stylesheet" />
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link href="{% static 'css/loader.css'%}" media="all" rel="stylesheet" />
+    <link href="{% static 'css/files.css'%}" media="all" rel="stylesheet" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <header>
+      {% include 'nav.html'%}
+      <div id="myBtn" onClick="screenTop()">
+        <img
+          src='{%static "img/top.jpg"%}'
+          alt="top"
+          style="width: 100%; overflow: hidden;"
+        />
+      </div>
+    </header>
+    <main>
+        <div id = 'dummy-nav'></div>
+        {% for i in categories %}
+          <h3>{{i}}</h3>
+          <hr>
+          <div class="container-fluid" style="padding: 1%;">
+            <div class="row">
+              {% for j in i.category_set.all%}
+              <div class="col-6 col-sm-4 col-md-3 col-lg-2">
+                <div class="category-display" onclick="location.href='{{j.get_view_url}}'">
+                    <img class = "category-images" src='{%static j.Image%}' alt="">
+                    <p>{{j}}</p>    
+                </div>
+              </div>
+              {% endfor %}
+            </div>
+          </div>
+        {% endfor %}
+    </main>
+
+    <script
+      src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+      integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+      crossorigin="anonymous"
+    ></script>
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
+      integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+      crossorigin="anonymous"
+    ></script>
+    <script
+      src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
+      integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+      crossorigin="anonymous"
+    ></script>
+    <script src="{% static 'js/scrip.js'%}"></script>
+  </body>
+</html>
+<!-- made by sourabh sanganwar -->

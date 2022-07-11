@@ -1,0 +1,8 @@
+#searchBar{
+    position: fixed;
+    top : 100px;
+    background-color: black;
+    z-index: 100;
+    padding: 1vh 1vw;
+    width: 100vw;
+}

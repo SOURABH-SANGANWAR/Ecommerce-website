@@ -1,0 +1,19 @@
+{% load static %}
+
+<div class="col product-list-display" >
+    <img class = "product-list-images" src="{%static object.Image %}" alt="">
+    <div class="product-list-description">
+    <p class = "product-list-titles">
+      {{object.Name|truncatewords:4}}
+    </p>
+    <div>&#8377;
+      <p class = 'old-price' >{{object.MRP}}</p></div>
+    <div class = 'discounted-price'>{{object.Price}}/-</div>
+  </div>
+  <!-- <a href="{{object.get_view_url}}">Exp</a> -->
+    <div class="product-list-open" onclick="location.href='{{object.get_view_url}}';">
+      Expand
+    </div>
+  </div>
+
+<!-- made by sourabh sanganwar -->

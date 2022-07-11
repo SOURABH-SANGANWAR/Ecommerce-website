@@ -1,0 +1,6 @@
+@media screen and (min-width : 759px) {
+    .Recommended-Products{
+        position : absolute; 
+        top : 100vh;
+    }
+}

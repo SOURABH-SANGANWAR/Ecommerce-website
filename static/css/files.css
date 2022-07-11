@@ -1,0 +1,9 @@
+.product-categories{
+    min-width: 120px;
+    height : 300px;
+    overflow: hidden;
+}
+
+.cat{
+    padding: 2%;
+}

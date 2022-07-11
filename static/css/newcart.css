@@ -1,0 +1,16 @@
+@media (max-width: 568.98px) {
+    .lbs{
+        display: block;
+    }
+    .lm{
+        display: none;
+    }
+}
+@media (min-width: 568.98px) {
+    .lm{
+        display: block;
+    }
+    .lbs{
+        display: none;
+    }
+}
