@@ -1,0 +1,91 @@
+{% load static %}
+
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    {% load static %}
+    <link
+      rel="stylesheet"
+      href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+      rel="nofollow"
+      integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
+      crossorigin="anonymous"
+    />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    {% load static %}
+    <link href="{% static 'css/style.css'%}" media="all" rel="stylesheet" />
+    {% load static %}
+    <link href="{% static 'css/fun.css'%}" media="all" rel="stylesheet" />
+    <link href="{% static 'css/table.css'%}" media="all" rel="stylesheet" />
+
+    
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body style="background-color: white;">
+    <header>
+      {% include 'nav.html'%}
+      </header>
+    <main style="background-color: white;">
+      <div id = 'dummy-nav'></div>
+      {%if msg%}
+    <script>
+        alert('{{msg}}');
+    </script>
+    {%endif%}
+    <h2>Adding varient for {{obj.Name}}</h2>
+      <form action="" method="post">{%csrf_token%}
+        <table>
+            <tr>
+                <th>
+                    <label for="Price">Price :</label>
+                </th>
+                <td>
+                    <input type="number" name="Price" id="Price"></td>
+            </tr>
+            <tr>
+                <th>
+                    <label for="MRP">MRP :</label>
+                </th>
+                <td>
+                    <input type="number" name="MRP" id="MRP">
+            </tr>
+            <tr>
+                <th>
+                    <label for="Varient">Varient :</label>
+                </th>
+                <td>
+                    <input type="text" name="Varient" id="Varient">
+            </tr>
+        </table>
+        
+        
+        
+        
+        
+        <input type="submit" value="Submit">
+      </form>
+
+    </main>
+
+    <script
+      src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+      integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+      crossorigin="anonymous"
+    ></script>
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
+      integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+      crossorigin="anonymous"
+    ></script>
+    <script
+      src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
+      integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+      crossorigin="anonymous"
+    ></script>
+    <script src="{% static 'js/scripting.js'%}"></script>
+  </body>
+</html>

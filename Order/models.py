@@ -1,6 +1,6 @@
 from tkinter import CASCADE
 from django.db import models
-from products.models import Product,Product_Seller,Colour,Varient
+from products.models import Product,Product_Seller,Colour
 # Create your models here.
 # import random
 # from CustomUser.models import CustomUser

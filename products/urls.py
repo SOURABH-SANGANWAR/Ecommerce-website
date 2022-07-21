@@ -1,11 +1,13 @@
 from django.contrib import admin
 from django.urls import path
-from .views import detail_view,detail_view_Category,search
+from .views import detail_view,detail_view_Category,search,cview,addv
 app_name = 'Products'
 
 
 urlpatterns = [
     path('<int:id>/', detail_view,name="detail_view"),
+    path('addVarient/<int:id>/', addv,name="add_varient"),
+    path('create/', cview.as_view(),name="create_view"),
     path('<int:id>/<int:seller>/', detail_view,name="detail_view_seller"),
     path('filter/<int:id>/', search,name="detail_view_filter"),
     path('search/<str:search>/', search,name="search"),

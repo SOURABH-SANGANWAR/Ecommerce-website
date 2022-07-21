@@ -27,7 +27,9 @@ class CustomUser(AbstractUser):
     email = models.EmailField(unique=True)
     username = models.TextField(null=True)
     phone_no = models.IntegerField(null=True)
-    city = models.ForeignKey(City,blank=True,on_delete=models.CASCADE,null=True)
+    pinCode = models.IntegerField(null=True)
+    # city = models.ForeignKey(City,blank=True,on_delete=models.CASCADE,null=True)
+    city = models.TextField( null=True)
     country = models.TextField(blank=True,default='India')
     is_ph_verified = models.BooleanField(default=False)
     USERNAME_FIELD =  'email'

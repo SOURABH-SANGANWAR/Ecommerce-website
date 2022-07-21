@@ -48,7 +48,7 @@
             class="nav-link"
             href="/Userprofile"
             > 
-            <img src="{% static 'img/360_F_346839683_6nAPzbhpSkIpb8pmAwufkC7c5eD7wYws.jpg'%}" style = "width: 30px; height: 30px; border-radius: 15px; overflow: hidden;" alt=""> </a
+            <img src="{% static user.image %}" style = "width: 30px; height: 30px; border-radius: 15px; overflow: hidden;" alt=""> </a
           >
         </li>
         <li class="nav-item dropdown">
@@ -86,13 +86,20 @@
 
   <div class="input-group" >
     <input type="search" class="form-control rounded" id = 'searchfield' placeholder="Search" aria-label="Search" aria-describedby="search-addon" />
-    <button type="button" class="btn btn-outline-primary" onclick="doSearch();" >search</button>
+    <button type="button" class="btn btn-outline-primary" id = 'SearchSubmit' onclick="doSearch();" >search</button>
   </div>
   
 
 </div>
 
 <script>
+  var searchb = document.getElementById("searchfield");
+  searchb.addEventListener("keypress", function(event) {
+    if (event.key === "Enter") {
+      event.preventDefault();
+      document.getElementById('SearchSubmit').click();
+    }
+  });
   function showSearch(){
     searchBar.style.top = navh + 'px';
     console.log(navh);
