@@ -1,11 +1,13 @@
+from unicodedata import category
 from django.shortcuts import render,get_object_or_404,redirect
 # from Cus.models import Account
-from .models import Product,Category
+from .models import Product,Category,Product_Seller, Varient
 from django.views import View
-# from .forms import MakeForm
+from .forms import RegisterProduct
 from django.urls import reverse
 from nltk.stem import PorterStemmer
 
+from django.contrib.auth.decorators import login_required
 # Create your views here.
 def detail_view(requests,id, seller = None):
     x = Product.objects.get(id = id)
@@ -65,8 +67,11 @@ def search(requests,search = None,id1 = None,id = None):
     if(search!=None):
         ps = PorterStemmer()
         lists = [ps.stem(w) for w in search.split(" ")]
+        print(lists)
         b  =[]
         for i in lists:
+            b.append(Product.objects.filter(Name__contains = i))#description__contains = i,
+        for i in search.split(" "):
             b.append(Product.objects.filter(Name__contains = i))#description__contains = i, 
         filtered = b[0]
         for i in b:
@@ -95,46 +100,95 @@ def search(requests,search = None,id1 = None,id = None):
     return render(requests,'Product_list.html',{'prods':filtered, 'desc':'Search Results:','cats':cats,'requests':requests})
 
 
+@login_required
+def addv(requests, id = None):
+    if(id == None):
+        return redirect('Products:create_view')
+    if(not( requests.user.is_seller or requests.user.is_staff)):
+            return redirect("Products:search")
+    x = Product.objects.get(id = id)
+    if(x == None):
+        return redirect('Products:create_view')
+    if requests.method == 'POST':
+        q = Varient.objects.get(Name = requests.POST.get('Varient')).id
+        if(q!=None):
+            print('Varient exisits')
+            z = Product.objects.filter(Name = x.Name).filter(Varients_id = q)
+            if z:
+                y = z[0]
+                print('Product with This varient exisits')
+                print(requests.user)
+                print(y.Sellers.all())
+                for sellers in y.Sellers.all():
+                    print(sellers.Name, requests.user)
+                    if requests.user == sellers.Name:
+                        print('yes')
+                        return render(requests, 'addv.html', {'requests' : requests, 'obj': x, 'msg': 'Already selling this product you can click on update price.'})
+            else:
+                y = Product.objects.create(Name = x.Name, Image = x.Image, Price = requests.POST.get('Price'), MRP = requests.POST.get('MRP'),  description  = x.description, features = x.features, category = x.category, varient_desc = x.varient_desc, Product_tags = x.Product_tags)
+                y.save()
+                y.Colours.add(*x.Colours.all());
+                y.is_root = False
+                y.save()
+            y.Sellers.create(Name = requests.user, Price = y.Price)
+            y.save()
+        else:    
+            y = Product.objects.create(Name = x.Name, Image = x.Image, Price = requests.POST.get('Price'), MRP = requests.POST.get('MRP'),  description  = x.description, features = x.features, category = x.category, varient_desc = x.varient_desc, Product_tags = x.Product_tags)
+            y.save()
+            y.Colours.add(*x.Colours.all());
+            y.Sellers.create(Name = requests.user, Price = y.Price)
+            y.Varients= Varient.objects.create(Name = requests.POST.get('Varient'))
+            y.is_root = False
+            y.save()
+        return redirect('Products:detail_view', id = y.id)
+    return render(requests, 'addv.html', {'requests' : requests, 'obj': x, 'msg': None})
 
 
-
-
-# class cview(View):
-#     def get(self,requests,id=None,*args, **kwargs):
-#         if(not (requests.user.is_authenticated and requests.user.is_staff)):
-#             return redirect("products:list_view")
-#         obj = None
-#         if id is not None:
-#             obj = get_object_or_404(Product,id = id)
-#         else:
-#             forms = MakeForm()
-#         if obj is not None:
-#             forms = MakeForm(instance=obj)
-#         context = {'form':forms,'obj':obj}
-#         print(obj)
-#         return render(requests,'new.html',context)
-#     def post(self,requests,id=None,*args, **kwargs):
-#         if(not requests.user.is_authenticated):
-#             return redirect("products:list_view")
-#         obj = None
-#         if id is not None:
-#             obj = get_object_or_404(data,id = id)
-#         else:
-#             forms = MakeForm(requests.POST)
-#             if forms.is_valid():
-#                 forms.save()
-#                 forms = MakeForm()
-#         if obj is not None:
-#             forms = MakeForm(requests.POST, instance=obj)
-#             if forms.is_valid():
-#                 print(requests.POST)
-#                 if 'Save' in requests.POST:
-#                     forms.save()
-#                 else:
-#                     return redirect("products:delete_view",id= id)    
-#                 return redirect("products:detail_view",id= id)
-#         context = {'form':forms,'obj':obj}
-#         return render(requests,'new.html',context)
+class cview(View):
+    def get(self,requests,id=None,*args, **kwargs):
+        print(requests.user)
+        if(not (requests.user.is_authenticated )):
+            return redirect("Products:search")
+        if(not( requests.user.is_seller or requests.user.is_staff)):
+            return redirect("Products:search")
+        obj = None
+        if id is not None:
+            obj = get_object_or_404(Product,id = id)
+        else:
+            forms = RegisterProduct()
+        if obj is not None:
+            forms = RegisterProduct(instance=obj)
+        context = {'form':forms,'obj':obj,'requests':requests}
+        print(obj)
+        return render(requests,'create.html',context)
+    def post(self,requests,id=None,*args, **kwargs):
+        if(not requests.user.is_authenticated):
+            return redirect("Products:search")
+        if(not( requests.user.is_seller or requests.user.is_staff)):
+            return redirect("Products:search")
+        obj = None
+        if id is not None:
+            obj = get_object_or_404(Product,id = id)
+        else:
+            forms = RegisterProduct(requests.POST, requests.FILES)
+            if forms.is_valid():
+                x = forms.save()
+                y = Product_Seller.objects.create(Name = requests.user, Price = x.Price)
+                x.Sellers.add(y)
+                x.save()
+                return redirect('Products:detail_view',id = x.id)
+                forms = RegisterProduct()
+        if obj is not None:
+            forms = RegisterProduct(requests.POST, requests.FILES, instance=obj)
+            if forms.is_valid():
+                print(requests.POST)
+                if 'Save' in requests.POST:
+                    forms.save()
+                else:
+                    return redirect("products:delete_view",id= id)    
+                return redirect("products:detail_view",id= id)
+        context = {'form':forms,'obj':obj,'requests':requests}
+        return render(requests,'create.html',context)
 
 # class lview(View):
 #     def get(self,requests,*args, **kwargs):

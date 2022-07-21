@@ -17,6 +17,8 @@ from django.contrib import admin
 from django.urls import path,include
 from django.conf import settings
 from django.conf.urls.static import static
+
+from .views import BestSellers,updateDetail
 from .views import home_view,Cat_view,offers,login_page,logout_page,profile,register
 from Order.views import myCart,myOrder,myOrderList
 
@@ -26,7 +28,8 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('', home_view, name = 'homeView'),
     path('categories/', Cat_view),
-    path('offers/', offers),
+    path('offers/', offers, name = 'offer'),
+    path('bestsell/', BestSellers, name = 'bestsell'),
     path('products/', include('products.urls')),
     # path('Orders/', include('Order.urls')),
     path('User/', include('CustomUser.urls')),
@@ -36,5 +39,6 @@ urlpatterns = [
     path('login/', login_page, name = 'login_page'),
     path('logout/', logout_page, name = 'logout_page'),
     path('Userprofile/', profile, name = 'profile'),
+    path('UserprofileUpdate/', updateDetail, name = 'profile'),
     path('register/', register, name = 'register'),
 ]+ static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

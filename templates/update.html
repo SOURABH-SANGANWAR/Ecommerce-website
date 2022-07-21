@@ -1,0 +1,148 @@
+
+{%load static%}
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <link
+      rel="stylesheet"
+      href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+      rel="nofollow"
+      integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
+      crossorigin="anonymous"
+    />
+    <link href="{% static 'css/cart.css'%}" media="all" rel="stylesheet" />
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <!-- <link href="css/loader.css" media="all" rel="stylesheet" /> -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <header>
+      {% include 'nav.html'%}
+      <div id="myBtn" onClick="screenTop()">
+        <img
+          src="{% static 'img/top.jpg'%}"
+          alt="top"
+          style="width: 100%; overflow: hidden;"
+        />
+      </div>
+    </header>
+    <main>
+        <div id = 'dummy-nav'></div>
+        <hr>
+        <div style="display: grid;">
+            <img src="{% static user.image %}" alt="" style = 'margin : 0 auto; width: 300px; height: 300px; border-radius: 150px;'>
+        </div>
+        <a href="" style="width: 100%; text-align: center; display: block;  color: black;">Update Profile Picture from camera</a>
+        <h3>Hello, {{user.username}}</h3>
+        <hr>
+        <br>
+        <form action="" method="post" enctype="multipart/form-data">{%csrf_token%}
+            <!-- 2 column grid layout with text inputs for the first and last names -->
+            <div class="row mb-4">
+              <div class="col">
+                <div class="form-outline">
+                  <input type="text" id="form6Example1" class="form-control" name = 'first_name' value="{{user.first_name}}"/>
+                  <label class="form-label" for="form6Example1" >First name</label>
+                </div>
+              </div>
+              <div class="col">
+                <div class="form-outline">
+                  <input type="text" id="form6Example2" class="form-control" name = 'last_name' value="{{user.last_name}}"/>
+                  <label class="form-label" for="form6Example2" >Last name</label>
+                </div>
+              </div>
+            </div>
+          
+            <!-- Text input -->
+            <div class="form-outline mb-4">
+              <input type="file" id="form6Example3" class="form-control" name = 'myImg' value="{{user.image}}"/>
+              <label class="form-label" for="form6Example3">Profile Image</label>
+            </div>
+          
+            <div class="row mb-4">
+                <div class="col">
+                  <div class="form-outline">
+                    <input type="email" id="form6Example5" class="form-control" name = 'email' value="{{user.email}}"/>
+                    <label class="form-label" for="form6Example5">Email</label>
+                    </div>
+                </div>
+                <div class="col">
+                  <div class="form-outline">
+                    <input type="number" id="form6Example6" class="form-control" name = 'phone_no' value="{{user.phone_no}}"/>
+                    <label class="form-label" for="form6Example6">Phone</label></div>
+                </div>
+            </div>
+            <div class="row mb-4">
+                <div class="col">
+                    <div class="form-outline">
+                        <input type="text" id="form6Example5" class="form-control" name = 'country' value="{{user.country}}"/>
+                        <label class="form-label" for="form6Example5">country</label>
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="form-outline">
+                      <input type="text" id="form6Example6" class="form-control" name = 'city' value="{{user.city}}"/>
+                      <label class="form-label" for="form6Example6">City</label></div>
+                  </div>
+                <div class="col">
+                  <div class="form-outline">
+                    <input type="number" id="form6Example6" class="form-control" name = 'pinCode' value="{{user.pinCode}}"/>
+                    <label class="form-label" for="form6Example6">Pincode</label></div>
+                </div>
+            </div>
+            <!-- Text input -->
+            <div class="form-outline mb-4">
+              <input type="text" id="form6Example4" class="form-control" name = 'address' value="{{user.address}}"/>
+              <label class="form-label" for="form6Example4">Address</label>
+            </div>
+
+
+            
+          
+            <!-- Message input -->
+            <div class="form-outline mb-4">
+              <textarea class="form-control" id="form6Example7" rows="4"></textarea>
+              <label class="form-label" for="form6Example7">Additional information</label>
+            </div>
+          
+            <!-- Checkbox -->
+            <!-- <div class="form-check d-flex justify-content-center mb-4">
+              <input class="form-check-input me-2" type="checkbox" value="" id="form6Example8" checked />
+              <label class="form-check-label" for="form6Example8"> Create an account? </label>
+            </div> -->
+          
+            <!-- Submit button -->
+            <button type="submit" class="btn btn-primary btn-block mb-4">Save</button>
+          </form>
+        
+    </main>
+
+    <script
+      src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+      integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+      crossorigin="anonymous"
+    ></script>
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
+      integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+      crossorigin="anonymous"
+    ></script>
+    <script
+      src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
+      integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+      crossorigin="anonymous"
+    ></script>
+    <script src="{% static 'js/scripting.js'%}"></script>
+    <script src="{% static 'js/scriptcart.js'%}"></script>
+  </body>
+</html>
+
+
+<!-- made by sourabh sanganwar -->
+
+

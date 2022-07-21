@@ -60,7 +60,8 @@ class Product_Seller(models.Model):
         return self.Name.username
     def HTMLaddr(self):
         if(self.Name.city!= None):
-            return "<h5 style = 'display: inline-block;'>Seller : "+self.Name.username+"</h5><span>&nbsp;&nbsp;&nbsp;("+self.Name.city.cityName+", "+self.Name.country+")</span>"
+            # return "<h5 style = 'display: inline-block;'>Seller : "+self.Name.username+"</h5><span>&nbsp;&nbsp;&nbsp;("+self.Name.city.cityName+", "+self.Name.country+")</span>"
+            return "<h5 style = 'display: inline-block;'>Seller : "+self.Name.username+"</h5><span>&nbsp;&nbsp;&nbsp;("+self.Name.city+", "+self.Name.country+")</span>"
         return "<h5 style = 'display: inline-block;'>Seller : "+self.Name.username+"</h5><span>&nbsp;&nbsp;&nbsp;(" +self.Name.country+")</span>"
 
 
@@ -79,6 +80,8 @@ class Product(models.Model):
     category = models.ForeignKey(Category, on_delete=models.CASCADE)
     varient_desc = models.TextField(blank=True,null=True)
     Product_tags = models.TextField(default=Name)
+    is_offer = models.BooleanField(default=False)
+    is_best = models.BooleanField(default=False)
     is_root = models.BooleanField(default=True)
     def Image_tag(self):
             return mark_safe('<img src="/media/%s" width="150" height="150" style = "border-radius : 75px;"/>' % (self.Image))
